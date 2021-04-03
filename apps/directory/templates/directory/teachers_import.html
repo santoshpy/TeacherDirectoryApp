@@ -1,0 +1,8 @@
+{% block content %}
+<h4>Import Teacher</h4>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" accept=".csv"  name="csv_file">
+        <button type="submit">Upload CSV</button>
+    </form>
+{% endblock %}
