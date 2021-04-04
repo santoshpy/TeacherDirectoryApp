@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third party apps
+    "import_export",
+    # Custom apps
     "apps.directory",
 ]
 

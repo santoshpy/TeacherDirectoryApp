@@ -1,0 +1,65 @@
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="card shadow mt-5">
+            <div class="card-header">
+                    <a class="text-decoration-none" href="{% url 'directory:teacher_list' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+                        </svg>
+                    </a>
+                    <h5 class="d-inline-block ml-2">{{ teacher.first_name }} {{ teacher.last_name }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                    <div style="display: grid; place-items: center;" class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="profile">
+                            {% if teacher.profile_picture %}
+                                <img class="img-fluid profile-picture" src="{{ teacher.profile_picture.url }}" alt="Profile Picture"/>
+                            {% else %}
+                                <img class="img-fluid profile-picture" src="{% static 'images/default-profile.png' %}" alt="Profile Picture"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <p>First Name: <span>{{ teacher.first_name }}</span></p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <p>Last Name: <span>{{ teacher.last_name }}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <p>Email: <span>{{ teacher.email_address }}</span></p>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <p>Phone Number: <span>{{ teacher.phone_number }}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p>Room Number: <span>{% if teacher.room_number %}{{ teacher.room_number }}{% else %} (No entries available) {% endif %}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p>Subjects:</p>
+                        {% if teacher.subjects %}
+                            <ul>
+                                {% for subject in teacher.subjects.all %}
+                                    <li>{{ subject.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            (No entries available)
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

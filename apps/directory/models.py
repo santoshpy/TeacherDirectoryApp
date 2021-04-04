@@ -1,6 +1,8 @@
+import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import  slugify
 
 from apps.directory.utils import get_upload_path
 
@@ -47,6 +49,7 @@ class Teacher(TimestampModel):
     email_address = models.EmailField(
         _("email_address"), max_length=50, primary_key=True
     )
+    slug = models.SlugField(blank=True, unique=True)
     first_name = models.CharField(_("first name"), max_length=150)
     last_name = models.CharField(_("last name"), max_length=150)
     phone_number = models.CharField(_("phone number"), max_length=15)
@@ -67,8 +70,13 @@ class Teacher(TimestampModel):
     def __str__(self):
         return self.email_address
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uuid.uuid4()
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse("teacher_detail", kwargs={"pk": self.id})
+        return reverse("teacher_detail", kwargs={"pk": self.email_address})
 
     def get_first_letter_of_last_name(self):
         return self.last_name[0] if self.last_name else ""

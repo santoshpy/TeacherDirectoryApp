@@ -1,0 +1,58 @@
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="card shadow mt-5">
+            <div class="card-header">
+                <h4>Teacher List</h4>
+            </div>
+            <div class="card-body">
+                <div class="filter">
+                    <p>Filters: </p>
+                    <p>
+                        <span>By Subject</span>
+                        <select id="_subject">
+                            <option value="">All</option>
+                            {% for sub in subjects %}
+                                <option value="sub.name">{{ sub.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p>
+                        <span>By First Letter of Last Name: </span>
+                        {% for letter in last_name_first_letters %}
+                            <a class="text-decoration-none" href="{% url 'directory:teacher_list' %}?last_name={{letter}}">
+                                <span class="badge badge-light text-uppercase">
+                                    {{letter}}
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th id='th-first-name'>First Name</th>
+                                <th id="th-last-name">Last Name</th>
+                                <th id='th-email-address'>Email Address</th>
+                                <th id='th-phone-number'>Phone Number</th>
+                                <th id='th-view-detail'>Goto Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teacher in teachers %}
+                                <tr>
+                                    <td>{{ teacher.first_name }}</td>
+                                    <td>{{ teacher.last_name }}</td>
+                                    <td>{{ teacher.email_address }}</td>
+                                    <td>{{ teacher.phone_number }}</td>
+                                    <td><a class="text-decoration-none" href="{% url 'directory:teacher_detail' teacher.slug %}">Detail</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
