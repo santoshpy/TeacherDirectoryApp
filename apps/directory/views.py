@@ -1,12 +1,16 @@
 import tablib
 from django.db.models.functions import Lower, Substr
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from apps.directory.mixins import LoggedInUserRequired
 from apps.directory.models import Subject, Teacher
 from apps.directory.resources import TeacherResource
+
+
+class HomePage(TemplateView):
+    template_name = 'home.html'
 
 
 class TeacherListView(LoggedInUserRequired, ListView):
@@ -26,11 +30,10 @@ class TeacherListView(LoggedInUserRequired, ListView):
             map(lambda obj: obj.get("last_name_first_char"), qs)
         )
         context["subjects"] = Subject.objects.all()
-        print(context)
         return context
 
     def get_queryset(self):
-        last_name_first_letter = self.request.GET.get("last_name_first_char")
+        last_name_first_letter = self.request.GET.get("last_name_first_letter")
         subject_name = self.request.GET.get("subject")
         queryset = Teacher.objects.all()
         if last_name_first_letter:
@@ -62,4 +65,4 @@ class BulkImportView(View):
         )
         if not result.has_errors():
             teacher_resource.import_data(data, dry_run=False)
-        return render(request, "directory/teachers_import.html")
+        return redirect('directory:teacher_list')

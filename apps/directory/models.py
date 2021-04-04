@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import  slugify
 
 from apps.directory.utils import get_upload_path
-
+from apps.directory.managers import TeacherManager
 
 class TimestampModel(models.Model):
     """
@@ -62,6 +62,8 @@ class Teacher(TimestampModel):
     )
     room_number = models.CharField(_("room number"), max_length=5)
     subjects = models.ManyToManyField(Subject)
+
+    objects = TeacherManager()
 
     class Meta:
         verbose_name = _("teacher")

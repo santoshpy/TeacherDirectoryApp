@@ -1,0 +1,14 @@
+.profile{
+    height: 6em;
+    width: 6em;
+    border-radius: 50% 50%;
+}
+
+.profile-picture{
+    border-radius: 50% 50%;
+}
+
+.badge-light {
+	color: #fff;
+	background-color: #79ae79;
+}

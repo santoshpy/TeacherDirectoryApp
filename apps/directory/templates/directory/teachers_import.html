@@ -1,8 +1,18 @@
+{% extends 'directory/auth_base.html' %}
+{% load static %}
 {% block content %}
-<h4>Import Teacher</h4>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" accept=".csv"  name="csv_file">
-        <button type="submit">Upload CSV</button>
-    </form>
+<div class="container mt-5">
+    <div class="jumbotron mt-3">
+        <h1>Bulk Import Teacher</h1>
+        <p class="lead">This example is a quick exercise to illustrate how the bottom navbar works.</p>
+        <div class="col-sm-12 col-lg-8 mr-auto ml-auto border p-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" accept=".csv" name="csv_file" required>
+                <button class="btn btn-lg btn-primary" type="submit">Upload CSV</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}
