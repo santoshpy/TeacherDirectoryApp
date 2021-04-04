@@ -3,18 +3,25 @@ from django.db.models.functions import Lower, Substr
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, DetailView, TemplateView
 
 from apps.directory.mixins import LoggedInUserRequired
 from apps.directory.models import Subject, Teacher
 from apps.directory.resources import TeacherResource
+from apps.directory.forms import UserAuthenticationForm
 
 
 class HomePage(TemplateView):
     template_name = 'home.html'
 
 
-class TeacherListView(LoggedInUserRequired, ListView):
+class UserLoginView(LoginView):
+    authentication_form = UserAuthenticationForm
+    template_name = "authentication/login.html"
+    redirect_authenticated_user = True
+
+class TeacherListView(ListView):
     model = Teacher
     context_object_name = "teachers"
     template_name = "directory/teachers_list.html"
@@ -44,14 +51,14 @@ class TeacherListView(LoggedInUserRequired, ListView):
         return queryset
 
 
-class TeacherDetailView(LoggedInUserRequired, DetailView):
+class TeacherDetailView(DetailView):
     model = Teacher
     context_object_name = "teacher"
     template_name = "directory/teacher_detail.html"
 
 
 
-class BulkImportView(View):
+class BulkImportView(LoggedInUserRequired, View):
     def get(self, request):
         template_name = "directory/teachers_import.html"
         return render(request, template_name)

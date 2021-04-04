@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <div class="container">
-        <div class="card shadow mt-5">
+        <div class="card shadow mt-5 border border-success">
             <div class="card-header">
                     <a class="text-decoration-none" href="{% url 'directory:teacher_list' %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
@@ -17,7 +17,7 @@
                     <div style="display: grid; place-items: center;" class="col-sm-12 col-md-4 col-lg-4">
                         <div class="profile">
                             {% if teacher.profile_picture %}
-                                <img class="img-fluid profile-picture" src="{{ teacher.profile_picture.url }}" alt="Profile Picture"/>
+                                <img class="img-fluid profile-picture border border-success rounded-circle" src="{{ teacher.profile_picture.url }}" alt="Profile Picture"/>
                             {% else %}
                                 <img class="img-fluid profile-picture" src="{% static 'images/default-profile.png' %}" alt="Profile Picture"/>
                             {% endif %}
@@ -27,32 +27,34 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <p>First Name: <span>{{ teacher.first_name }}</span></p>
+                        <p><strong>First Name: </strong><span>{{ teacher.first_name }}</span></p>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <p>Last Name: <span>{{ teacher.last_name }}</span></p>
+                        <p><strong> Name: </strong><span>{{ teacher.last_name }}</span></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <p>Email: <span>{{ teacher.email_address }}</span></p>
+                        <p><strong>Email: </strong><span>{{ teacher.email_address }}</span></p>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <p>Phone Number: <span>{{ teacher.phone_number }}</span></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <p>Room Number: <span>{% if teacher.room_number %}{{ teacher.room_number }}{% else %} (No entries available) {% endif %}</span></p>
+                        <p><strong>Phone Number: </strong><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>  {{ teacher.phone_number }}</span></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                        <p>Subjects:</p>
+                        <p><strong>Room Number: </strong><span> {% if teacher.room_number %}{{ teacher.room_number }}{% else %} (No entries available) {% endif %}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p><strong>Subjects:</strong></p>
                         {% if teacher.subjects %}
                             <ul>
                                 {% for subject in teacher.subjects.all %}
-                                    <li>{{ subject.name }}</li>
+                                    <li> <span class="badge badge-success text-capitalize">{{ subject.name }}</span></li>
                                 {% endfor %}
                             </ul>
                         {% else %}
