@@ -2,6 +2,7 @@ import tablib
 from django.db.models.functions import Lower, Substr
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
 from django.views.generic import ListView, DetailView, TemplateView
 
 from apps.directory.mixins import LoggedInUserRequired
@@ -65,4 +66,6 @@ class BulkImportView(View):
         )
         if not result.has_errors():
             teacher_resource.import_data(data, dry_run=False)
+            messages.add_message(request, messages.SUCCESS, 'Teacher imported successfully!')
+
         return redirect('directory:teacher_list')
