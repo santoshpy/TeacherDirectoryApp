@@ -7,6 +7,7 @@
 A teacher directory app containing all the Teachers in a given school.
 
 Each teacher should have the following information
+
 - First Name
 - Last Name
 - Profile picture
@@ -27,7 +28,7 @@ The backend is implemented using [Django][DJANGO] in [Python][PYTHON].
 
   - Python: 3.9.1
   - Django: 3.2
-  
+
 ### Frontend
   - Bootstrap 4
 
@@ -87,6 +88,11 @@ The backend is implemented using [Django][DJANGO] in [Python][PYTHON].
 
     Enter your desired username and password to create admin user.
 
-Now you can visit 127.0.0.1:8000 in your browser 
+Now you can visit 127.0.0.1:8000 in your browser
 
 To import CSV file have to log in using username and password created above.
+
+NOTE: Bulk Import Teacher:
+This csv importer will import the following fields in given orders:
+
+```first_name,last_name,profile_picture,email_address,phone_number,room_number,subjects```
