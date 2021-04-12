@@ -24,7 +24,7 @@ class ManyToManyWidgetWithCreation(ManyToManyWidget):
                     **{self.field: val.strip().lower()}
                 )
 
-        return super().clean(value, row=None, *args, **kwargs)
+        return super().clean(value, row=row, *args, **kwargs)
 
 
 class TeacherResource(resources.ModelResource):
@@ -57,19 +57,11 @@ class TeacherResource(resources.ModelResource):
         )
 
     def before_import_row(self, row, row_number=None, **kwargs):
-        image_path = row["profile_picture"]
-        path = Path(image_path)
-        if not path.exists():
-            image_name = image_path.split("/")[-1]
-            image_path = settings.BASE_DIR / "teachers" / image_name
-
-        if image_path.exists():
-            tmp_file = tempfile.NamedTemporaryFile(
-                delete=True, dir=f"{settings.MEDIA_ROOT}"
-            )
-            with open(image_path, "rb") as f:
-                tmp_file.write(f.read())
-            tmp_file.flush()
-            row["profile_picture"] = File(tmp_file, image_name)
+        upload_images = kwargs.get('upload_images')
+        profile_image = row.get("profile_picture")
+        if upload_images and profile_image in upload_images:
+            file_obj = upload_images.get(profile_image)
+            profile_pic = File(file_obj)
+            row["profile_picture"] = profile_pic
         else:
             row["profile_picture"] = None

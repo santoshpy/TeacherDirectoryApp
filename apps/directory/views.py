@@ -67,12 +67,13 @@ class BulkImportView(LoggedInUserRequired, View):
         teacher_resource = TeacherResource()
         dataset = tablib.Dataset()
         csv_file = request.FILES["csv_file"]
+        upload_images = {fileobj.name: fileobj  for fileobj in request.FILES.getlist('profile_pictures_file')}
         data = dataset.load(csv_file.read().decode(), format="csv")
         result = teacher_resource.import_data(
-            data, dry_run=True, raise_errors=True, collect_failed_rows=True
+            data, dry_run=True, raise_errors=True, collect_failed_rows=True,
         )
         if not result.has_errors():
-            teacher_resource.import_data(data, dry_run=False)
+            teacher_resource.import_data(data, dry_run=False, upload_images=upload_images)
             messages.add_message(request, messages.SUCCESS, 'Teacher imported successfully!')
 
         return redirect('directory:teacher_list')

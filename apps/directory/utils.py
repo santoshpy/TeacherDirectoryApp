@@ -1,7 +1,5 @@
-from datetime import datetime
-from pathlib import Path
+from django.conf import settings
 
 
 def get_upload_path(instance, filename):
-    folder_name = datetime.now().date().strftime("%Y/%m/%d")
-    return Path("profile/picture/") / folder_name / filename
+    return filename

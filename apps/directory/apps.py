@@ -9,4 +9,4 @@ class DirectoryConfig(AppConfig):
     verbose_name = _("directory")
 
     def ready(self):
-        autodiscover_modules("directory.signals")
+        autodiscover_modules("signals")

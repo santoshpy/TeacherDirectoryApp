@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, pre_delete
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
@@ -15,3 +15,8 @@ def subject_changed(sender, **kwargs):
                 f"A teacher can teach no more than 5 subject, found {total_subjects} subject"
             )
         )
+
+
+@receiver(pre_delete, sender=Teacher)
+def teacher_delete(sender, instance, **kwargs):
+    instance.profile_picture.delete()
