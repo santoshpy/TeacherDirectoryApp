@@ -70,7 +70,7 @@ The backend is implemented using [Django][django] in [Python][python].
 
 - Configure environment variable:
 
-NOTE: Rename .env.example to .env
+__NOTE:__ Rename .env.example to .env
 
       (venv) $ mv .env.example .env
 

@@ -137,7 +137,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-/media/
+**/media/**
+!**/media
+!**/media/default-profile.png
 
 # Only for Development only
 **/migrations/**
